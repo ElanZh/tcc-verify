@@ -1,0 +1,14 @@
+---
+spring:
+  cloud:
+    consul:
+      host: 1haoji
+      config:
+        format: YAML
+        default-context: tccVerify
+        profile-separator: '-'
+        prefix: tccVerify
+      discovery:
+        instance-id: ${spring.application.name}:${spring.application.instance_id:${spring.profiles:dev}}:${server.port:}
+        prefer-ip-address: true
+        health-check-critical-timeout: 60s
