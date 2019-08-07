@@ -1,6 +1,7 @@
 package elan.verify.tcc.user.biz;
 
 import elan.verify.tcc.user.tcc.IUserBalanceService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @Description TODO
  */
 @Service("userBalanceCancel")
+@Slf4j
 public class UserBalanceCancelImpl implements IUserBalanceService {
 
     private final UserRepo userRepo;
@@ -21,6 +23,7 @@ public class UserBalanceCancelImpl implements IUserBalanceService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean subtractBalance(int userId, int value) {
+        log.warn("开始取消用户余额减扣：user=" + userId + ", value=" + value);
         return userRepo.updateForAdd(userId, value) == 1;
     }
 }
