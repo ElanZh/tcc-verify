@@ -9,10 +9,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = "elan.verify.tcc.storage", exclude = { MongoAutoConfiguration.class })
+@SpringBootApplication(exclude = { MongoAutoConfiguration.class })
 @EnableDiscoveryClient
 @Slf4j
-@EnableJpaRepositories(basePackages = "com.bytesvc.provider.springdata", entityManagerFactoryRef = "entityManagerFactory", transactionManagerRef = "jtaTransactionManager")
 @Import(SpringCloudConfiguration.class)
 public class App {
 

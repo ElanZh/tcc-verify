@@ -1,7 +1,7 @@
 package elan.verify.tcc.order.biz;
 
-import elan.verify.tcc.order.tcc.IOrderService;
-import org.bytesoft.compensable.Compensable;
+import elan.verify.tcc.order.feign.UserFeign;
+import org.dromara.hmily.common.exception.HmilyRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,28 +15,24 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("order")
-@Compensable(
-        interfaceClass = IOrderService.class,
-        simplified = true
-)
-public class OrderCtrlImpl implements IOrderService{
+public class OrderCtrl {
     private final UserFeign userFeign;
     private final OrderRepo orderRepo;
 
-    @Autowired
-    public OrderCtrlImpl(UserFeign userFeign, OrderRepo orderRepo) {
+    @Autowired(required = false)
+    public OrderCtrl(UserFeign userFeign, OrderRepo orderRepo) {
         this.userFeign = userFeign;
         this.orderRepo = orderRepo;
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
     @GetMapping("create")
     public boolean create(int userId){
         // 总价定死150
         final int amount = 150;
         // 减扣用 户余额
-        if (!userFeign.subtractBalance(userId, amount)) {
+        Boolean b = userFeign.subtractBalance(userId, amount);
+        if (!b) {
             return false;
         }
 
@@ -45,6 +41,9 @@ public class OrderCtrlImpl implements IOrderService{
         o.setUserId(userId);
         o.setAmount(amount);
         orderRepo.save(o);
-        return true;
+        /* 下面直接模拟 RPC之后的异常 */
+        throw new HmilyRuntimeException("中断");
+
+//        return true;
     }
 }

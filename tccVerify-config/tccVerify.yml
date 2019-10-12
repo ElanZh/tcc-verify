@@ -2,14 +2,9 @@ management:
   endpoint:
     health:
       show-details: always
-    web:
-      exposure:
-        include: hystrix.stream
 
 # SpringCloud feign 默认开启支持ribbon
 ribbon:
-  # 对所有操作请求都进行重试
-  OkToRetryOnAllOperations: true
   # 请求连接的超时时间
   ConnectTimeout: 1000
   # 请求处理的超时时间
@@ -37,6 +32,8 @@ feign:
     enabled: true
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
@@ -56,18 +53,28 @@ spring:
         # 远程访问控制台
         web-allow-others: true
 
+org:
+  dromara:
+    hmily:
+      serializer: kryo
+      recoverDelayTime: 30
+      retryMax: 30
+      scheduledDelay: 30
+      scheduledThreadMax:  10
+      repositorySupport: db
+      hmilyDbConfig:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://2haoji:3306/tcc_verify_hmily?useSSL=false&allowPublicKeyRetrieval=true
+        username: root
+        password: admin
+
 logging:
   level:
     root: info
-    org:
-      springframework:
-        web: error
-      hibernate:
-        SQL: debug
-        type:
-          descriptor:
-            sql:
-              # sql 入参显示
-              BasicBinder: trace
-              # sql 出参显示
-              # BasicExtractor: trace
+    org.springframework.web: error
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.dromara.hmily.bonuspoint: debug
+    org.dromara.hmily.lottery: debug
+    org.dromara.hmily: debug
+    io.netty: info

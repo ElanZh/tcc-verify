@@ -1,7 +1,5 @@
 package elan.verify.tcc.storage.biz;
 
-import elan.verify.tcc.storage.tcc.IStorageService;
-import org.bytesoft.compensable.Compensable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("storage")
-@Compensable(
-        interfaceClass = IStorageService.class,
-        confirmableKey = "storageConfirm",
-        cancellableKey = "storageCancel"
-)
-public class StorageCtrlImpl implements IStorageService{
+public class StorageCtrlImpl{
     private final StorageRepo storageRepo;
 
     @Autowired
@@ -28,7 +21,6 @@ public class StorageCtrlImpl implements IStorageService{
         this.storageRepo = storageRepo;
     }
 
-    @Override
     @GetMapping("subtractStorage")
     @Transactional(rollbackFor = Exception.class)
     public boolean subtractStorage(int storageId, int value){

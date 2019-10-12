@@ -1,9 +1,6 @@
 package elan.verify.tcc.user.biz;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "T_USER")
@@ -15,5 +12,11 @@ public class User {
     @GeneratedValue(generator = "SQ_USER")
     private Integer id;
 
-    private Integer balance;
+    /** 余额 */
+    @Column(nullable = false)
+    private Integer balance = 0;
+
+    /** 冻结余额 */
+    @Column(nullable = false)
+    private Integer freezeBalance = 0;
 }

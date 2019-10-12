@@ -1,6 +1,5 @@
 package elan.verify.tcc.storage.biz;
 
-import elan.verify.tcc.storage.tcc.IStorageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,14 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @Description TODO
  */
 @Service("storageConfirm")
-public class StorageConfirmImpl implements IStorageService {
+public class StorageConfirmImpl{
     private final StorageRepo storageRepo;
 
     public StorageConfirmImpl(StorageRepo storageRepo) {
         this.storageRepo = storageRepo;
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean subtractStorage(int storageId, int value) {
         return storageRepo.confirmForSubtract(storageId) == 1;
