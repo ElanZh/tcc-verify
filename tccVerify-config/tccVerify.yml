@@ -32,10 +32,13 @@ feign:
     enabled: true
 
 spring:
+  aop:
+    auto: true
   main:
     allow-bean-definition-overriding: true
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+#    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       # 自动更新表结构
       ddl-auto: update
@@ -43,15 +46,15 @@ spring:
       hibernate:
         # 在控制台打出sql
         show_sql: true
-  h2:
-    console:
-      enabled: true
-      # 访问H2控制台的路径
-      path: /h2/console
-      settings:
-        trace: false
-        # 远程访问控制台
-        web-allow-others: true
+#  h2:
+#    console:
+#      enabled: true
+#      # 访问H2控制台的路径
+#      path: /h2/console
+#      settings:
+#        trace: false
+#        # 远程访问控制台
+#        web-allow-others: true
 
 org:
   dromara:
@@ -71,6 +74,7 @@ org:
 logging:
   level:
     root: info
+    org.springframework: debug
     org.springframework.web: error
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace

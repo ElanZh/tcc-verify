@@ -1,13 +1,6 @@
 package elan.verify.tcc.user.config;
 
-import org.dromara.hmily.common.config.HmilyDbConfig;
-import org.dromara.hmily.core.bootstrap.HmilyTransactionBootstrap;
-import org.dromara.hmily.core.service.HmilyInitService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.core.env.Environment;
 
 /**
  * @author 张一然
@@ -15,7 +8,6 @@ import org.springframework.core.env.Environment;
  * @Description
  */
 @Configuration
-@EnableAspectJAutoProxy(proxyTargetClass=true)
 public class TCCConfig {
 
 //    @Autowired
